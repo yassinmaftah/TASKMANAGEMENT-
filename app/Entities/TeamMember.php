@@ -9,6 +9,17 @@ abstract class TeamMember
     private DateTime $createdAt;
     private string $password;
 
+
+    public function __construct($username, $email, $password, $teamId, $id = null)
+    {
+        $this->username = $username;
+        $this->email = $email;
+        $this->setPassword($password);
+        $this->teamId = $teamId;
+        $this->id = $id;
+        $this->createdAt = new DateTime();
+    }
+
     public function Getid() { return $this->id ;}
     public function GetUserName() { return $this->username ;}
     public function GetEmail() { return $this->email ;}
