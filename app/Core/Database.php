@@ -1,34 +1,35 @@
 <?php
-// declare(strict_types=1);
-// namespace App\Core;
 // use PDO;
 // use PDOException;
-// use Exception;
 
 class Database
 {
-    private static $host = "localhost";
-    private static $user = "root";
-    private static $password = "sqlyassine2025";
-    private static $dbname = "TaskManagemrnt";
-    private static $conn = null;
+    private static $instance = null;
+    private $connection;
 
-    public static function GetConnect ()
+    private string $host = "localhost";
+    private string $user = "root";
+    private string $password = "sqlyassine2025";
+    private string $dbname = "TaskManagemrnt";
+
+    private function __construct()
     {
-        try
-        {
-            if (!self::$conn)
-            {
-                self::$conn = new PDO("mysql:host=" . self::$host . ";dbname=" . self::$dbname , self::$user, self::$password);
-                self::$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                self::$conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-            }
-            return self::$conn;
-        }
-        catch (PDOException $e)
-        {
-            throw new Exception("Database Not Connected " . $e->getMessage());
+        try {
+            $this->connection = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->dbname, $this->user, $this->password);
+            $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->connection->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);            
+        } catch (PDOException $e) {
+            die("Problem in connection: " . $e->getMessage());
         }
     }
 
+    public static function getInstance()
+    {
+        if (self::$instance === null)
+            self::$instance = new self();
+        return self::$instance;
+    }
+    public function getConnection(){return $this->connection;}
+    private function __clone() { }
+    public function __wakeup() { throw new Exception("Cannot instantiate abstract Task class");}
 }
