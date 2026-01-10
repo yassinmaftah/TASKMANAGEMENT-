@@ -9,4 +9,6 @@ class BugTask extends Task
         return "Low";
     }
     public function getRequiredSkills() {return ['Debugging', 'Testing', 'Log Analysis'];}
+    public function setPriority($level) { ;}
+    public function getPriority() { ;}
 }

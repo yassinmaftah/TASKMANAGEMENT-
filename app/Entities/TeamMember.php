@@ -2,7 +2,7 @@
 
 abstract class TeamMember
 {
-    private int $id;
+    private ?int $id;
     private string $username;
     private string $email;
     private int $teamId;

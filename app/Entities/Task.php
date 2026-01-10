@@ -1,8 +1,11 @@
 <?php
+require_once __DIR__ . '/../Interfaces/Assignable.php';
+require_once __DIR__ . '/../Interfaces/Commentable.php';
+require_once __DIR__ . '/../Interfaces/Prioritizable.php';
 
 abstract class Task implements Assignable, Prioritizable, Commentable
 {
-    protected int $id;
+    protected ?int $id;
     protected string $title;
     protected string $description;
     protected int $projectId;
