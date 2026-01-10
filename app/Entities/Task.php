@@ -1,6 +1,6 @@
 <?php
 
-abstract class Task
+abstract class Task implements Assignable, Prioritizable, Commentable
 {
     protected int $id;
     protected string $title;
@@ -15,6 +15,7 @@ abstract class Task
     protected string $dueDate;
     protected DateTime $createdAt;
     protected DateTime $updatedAt;
+    protected $comments = [];
 
     public function __construct(string $title, string $description, int $projectId, int $reporterId)
     {
@@ -31,6 +32,16 @@ abstract class Task
         $this->updatedAt = new DateTime();
     }
 
+    public function addComment($comment) 
+    {
+        $this->comments[] = [
+            'text' => $comment,
+            'date' => new DateTime()
+        ];
+    }
+    
+    public function getComments() {return $this->comments;}
+
     public function getId() { return $this->id; }
     public function getTitle() { return $this->title; }
     public function getdescription() {return $this->description;}
@@ -42,7 +53,7 @@ abstract class Task
     public function getcreatedAt() { return $this->createdAt; }
     public function getupdatedAt() { return $this->updatedAt; }
 
-
+    public function getAssignee() { return $this->assigneeId; }
     public function setAssignee($assigneeId) { $this->assigneeId = $assigneeId; }
     public function setStatus($status) { $this->status = $status; }
     abstract public function calculateComplexity();
